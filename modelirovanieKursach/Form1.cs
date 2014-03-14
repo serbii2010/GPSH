@@ -17,6 +17,9 @@ namespace modelirovanieKursach
         {
             InitializeComponent();
 
+            tabControl1.TabPages[0].Text = "значения";
+            tabControl1.TabPages[1].Text = "графики";
+
             #region рисовалка графиков
             PointPairList list = new PointPairList();
 
@@ -32,7 +35,7 @@ namespace modelirovanieKursach
             }
 
             Drawing drawing = new Drawing();
-            drawing.DrawGraph(zedGraphControl1, list);
+            ///drawing.DrawGraph(zedGraphControl1, list);
             #endregion
         }
 
@@ -42,7 +45,7 @@ namespace modelirovanieKursach
             var random = new Random();
             var sample = new List<double>();
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < Convert.ToInt32(numericUpDown2.Value); i++)
             {
                 double experience = Math.Pow(random.NextDouble(), 2)/4;
                 sample.Add(experience);
