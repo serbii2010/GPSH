@@ -17,8 +17,18 @@ namespace modelirovanieKursach
         {
             InitializeComponent();
 
-            tabControl1.TabPages[0].Text = "значения";
-            tabControl1.TabPages[1].Text = "графики";
+
+            //dataGridView1.Columns.Add("", "");
+            for (int i = 0; i < Convert.ToInt32(numericUpDown3.Value); i++)
+            {
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[i].Height = 20;
+            }
+            dataGridView1.Columns[0].Width = 78;
+            dataGridView1.Columns[1].Width = 79;
+            dataGridView1.Height = dataGridView1.Rows.Count * 20 + 23;
+            dataGridView1.Width = 160;
+            //dataGridView1.Rows.Add();
 
             #region рисовалка графиков
             PointPairList list = new PointPairList();
@@ -35,36 +45,74 @@ namespace modelirovanieKursach
             }
 
             Drawing drawing = new Drawing();
-            ///drawing.DrawGraph(zedGraphControl1, list);
+            drawing.DrawGraph(zedGraphControl1, list);
             #endregion
         }
 
+
+        /*
+         метод обратной функции
+         */
+
         private void button1_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "";
-            var random = new Random();
-            var sample = new List<double>();
+            /**
+             метод обратной функции для непрерывных величин
+             */
+            if (radioButton4.Checked)
+            {
+                textBox1.Text = "";
+                var random = new Random();
+                var sample = new List<double>();
 
-            for (int i = 0; i < Convert.ToInt32(numericUpDown2.Value); i++)
-            {
-                double experience = Math.Pow(random.NextDouble(), 2)/4;
-                sample.Add(experience);
+                for (int i = 0; i < Convert.ToInt32(numericUpDown2.Value); i++)
+                {
+                    double experience = Math.Pow(random.NextDouble(), 2)/4;
+                    sample.Add(experience);
+                }
+                foreach (var d in sample)
+                {
+                    textBox1.Text += d + "\r\n";
+                }
             }
-            foreach (var d in sample)
+
+
+            /**
+             метод обратной функции для дискретный величин
+             */
+            if (radioButton5.Checked)
             {
-                textBox1.Text += d + "\r\n";
+                textBox1.Text = "";
+                Dictionary<double,double> rowрAllocation = new Dictionary<double, double>();
+                
+                dataGridView1.SelectAll();
+                foreach (DataGridViewRow dr in dataGridView1.SelectedRows)
+                {
+                    try
+                    {
+                        rowрAllocation.Add(
+                            Convert.ToDouble(dr.Cells[0].Value),
+                            Convert.ToDouble(dr.Cells[1].Value)
+                        );
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Задается вероятность для одинаковых значений");
+                        return;
+                    }
+                }
+                var random = new Random();
+                for (int i = 0; i < numericUpDown2.Value; i++)
+                {
+                    textBox1.Text += func.functionDiscrete(rowрAllocation, random.NextDouble()) + "\r\n";
+                }
             }
-            //double h = 0;
-            //foreach (var d in sample)
-            //{
-            //    if (d<0.001)
-            //    {
-            //        h++;
-            //    }
-            //}
-            //textBox1.Text += h;
         }
 
+
+        /***
+         * универсальный метод
+         * */
         private void button2_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
@@ -100,7 +148,7 @@ namespace modelirovanieKursach
                 dx *= 0.01;
                 while (x<=9)
                 {
-                    S += func.function(x)*dx;
+                    S += func.functionUniversal(x)*dx;
                     if (S >= chanceInterval)
                     {
                         borderInterval.Add(x);
@@ -193,7 +241,7 @@ namespace modelirovanieKursach
             for (int i = 0; i < Convert.ToInt32(numericUpDown2.Value); i++)
             {
                 int r = random.Next(Convert.ToInt32(numericUpDown1.Value) - 1);
-                sample.Add(func.function((borderInterval[r + 1] - borderInterval[r])
+                sample.Add(func.functionUniversal((borderInterval[r + 1] - borderInterval[r])
                 * random.NextDouble() + borderInterval[r]));
             }
             
@@ -201,6 +249,57 @@ namespace modelirovanieKursach
             {
                 textBox1.Text += d + "\r\n";
             }
+        }
+
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+
+            dataGridView1.Rows.Clear();
+            
+            //dataGridView1.Columns.Add("", "");
+            for (int i = 0; i < Convert.ToInt32(numericUpDown3.Value); i++)
+            {
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[i].Height = 20;
+            }
+            dataGridView1.Height = dataGridView1.Rows.Count * 20 + 23;
+           // dataGridView1.Columns.Add("", "");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Dictionary<double, double> prim = new Dictionary<double, double>();
+            prim.Add(-6, 0.11);
+            prim.Add(-5, 0.02);
+            prim.Add(-1, 0.07);
+            prim.Add(0, 0.22);
+            prim.Add(2, 0.01);
+            prim.Add(5, 0.13);
+            prim.Add(6, 0.04);
+            prim.Add(12, 0.05);
+            prim.Add(15, 0.13);
+            prim.Add(20, 0.12);
+            prim.Add(22, 0.1);
+
+            numericUpDown3.Value = 11;
+            dataGridView1.Rows.Clear();
+
+            int i = 0;
+            double sum = 0;
+            foreach (var d in prim)
+            {
+                sum += d.Value;
+                dataGridView1.Rows.Add(d.Key, d.Value);
+                dataGridView1.Rows[i].Height = 20;
+                i++;
+            }
+
+            if (Math.Round(sum, 5) != 1)
+            {
+                MessageBox.Show("Сумма вероятносте не равна 1!!!");
+            }
+
+            dataGridView1.Height = dataGridView1.Rows.Count * 20 + 23;
         }
     }
 }

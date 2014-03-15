@@ -1,8 +1,30 @@
-﻿namespace modelirovanieKursach
+﻿using System.Collections.Generic;
+
+namespace modelirovanieKursach
 {
     public static class func
     {
-        public static double function(double x)
+        public static double functionDiscrete(Dictionary<double, double> rowрAllocation, double psch)
+        {
+            Dictionary<double,double> functionAllocation = new Dictionary<double, double>();
+            double promSnach = 0;
+            foreach (var d in rowрAllocation)
+            {
+                promSnach += d.Value;
+                functionAllocation.Add(promSnach, d.Key);
+            }
+
+            foreach (var d in functionAllocation)
+            {
+                if (psch<d.Key)
+                {
+                    return d.Value;
+                }
+            }
+            return 0;
+        }
+
+        public static double functionUniversal(double x)
         {
             if (x<0 || x>9)
             {
@@ -58,7 +80,7 @@
             double S = 0;
             while (x < x1)
             {
-                S += function(x)*dx;
+                S += functionUniversal(x)*dx;
                 x += dx;
             }
             return S;
