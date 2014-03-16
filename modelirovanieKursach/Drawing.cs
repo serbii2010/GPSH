@@ -10,17 +10,7 @@ namespace modelirovanieKursach
 {
     class Drawing
     {
-        private double f(double x)
-        {
-            if (x == 0)
-            {
-                return 1;
-            }
-
-            return Math.Sin(x) / x;
-        }
-
-        public void DrawGraph(ZedGraphControl zedGraph, PointPairList list)
+        public Drawing(ZedGraphControl zedGraph)
         {
             // Получим панель для рисования
             GraphPane pane = zedGraph.GraphPane;
@@ -34,19 +24,22 @@ namespace modelirovanieKursach
             pane.XAxis.MinorGrid.DashOn = 3;
             pane.XAxis.MinorGrid.DashOff = 2;
 
-
-
             pane.YAxis.MajorGrid.IsVisible = true;
             pane.YAxis.MajorGrid.DashOn = 10;
             pane.YAxis.MinorGrid.IsVisible = true;
             pane.YAxis.MinorGrid.DashOn = 3;
             pane.YAxis.MinorGrid.DashOff = 2;
+        }
+
+        public void DrawFunction(ZedGraphControl zedGraph, PointPairList list)
+        {
+            GraphPane pane = zedGraph.GraphPane;
 
             PointPairList list1 = new PointPairList();
             list1.Add(1, 1);
             list1.Add(-1,1);
 
-            pane.AddCurve("", list1, Color.Red, SymbolType.None);
+            //pane.AddCurve("", list1, Color.Red, SymbolType.None);
 
             // Создадим кривую с названием "Sinc", 
             // которая будет рисоваться голубым цветом (Color.Blue),
@@ -60,6 +53,27 @@ namespace modelirovanieKursach
             zedGraph.AxisChange();
 
             // Обновляем график
+            zedGraph.Invalidate();
+        }
+
+        public void drawBar(ZedGraphControl zedGraph, PointPairList pairList)
+        {
+            // Получим панель для рисования
+            GraphPane pane = zedGraph.GraphPane;
+
+            PointPairList list = new PointPairList();
+            foreach (var l in pairList)
+            {
+                list.Add(l.X,0);
+                list.Add(l.X,l.Y);
+                list.Add(l.X, 0);
+            }
+
+            
+
+            LineItem myItem = pane.AddCurve("", list, Color.Red, SymbolType.None);
+            myItem.Line.Width = 3.0f;
+            zedGraph.AxisChange();
             zedGraph.Invalidate();
         }
     }

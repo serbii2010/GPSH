@@ -44,10 +44,29 @@ namespace modelirovanieKursach
                 list.Add(x, 4 * Math.Pow(x, 2));
             }
 
-            Drawing drawing = new Drawing();
-            drawing.DrawGraph(zedGraphControl1, list);
+            Drawing drawing = new Drawing(zedGraphControl1);
+            drawing.DrawFunction(zedGraphControl1, list);
             #endregion
         }
+
+        //private void graphDraw()
+        //{
+        //    PointPairList list = new PointPairList();
+
+
+        //    double xmin = -1;
+        //    double xmax = 1;
+
+        //    // Заполняем список точек
+        //    for (double x = xmin; x <= xmax; x += 0.01)
+        //    {
+        //        // добавим в список точку
+        //        list.Add(x, 4 * Math.Pow(x, 2));
+        //    }
+
+        //    Drawing drawing = new Drawing();
+        //    drawing.DrawFunction(zedGraphControl2, rowAllocation);
+        //}
 
 
         /*
@@ -82,6 +101,7 @@ namespace modelirovanieKursach
              */
             if (radioButton5.Checked)
             {
+                double sumP = 0;
                 textBox1.Text = "";
                 Dictionary<double,double> rowрAllocation = new Dictionary<double, double>();
                 
@@ -101,11 +121,34 @@ namespace modelirovanieKursach
                         return;
                     }
                 }
+                foreach (DataGridViewRow dr in dataGridView1.SelectedRows)
+                {
+                    sumP += Convert.ToDouble(dr.Cells[1].Value);
+                }
+                if (Math.Round(sumP, 5) != 1)
+                {
+                    MessageBox.Show(
+                        "Сумма вероятностей должна быть равна 1, а у вас " + 
+                        Convert.ToString(sumP)
+                        );
+                    return;
+                }
                 var random = new Random();
                 for (int i = 0; i < numericUpDown2.Value; i++)
                 {
                     textBox1.Text += func.functionDiscrete(rowрAllocation, random.NextDouble()) + "\r\n";
                 }
+
+                PointPairList list1 = new PointPairList();
+                // Заполняем список точек
+                foreach (DataGridViewRow dr in dataGridView1.SelectedRows)
+                {
+                //     добавим в список точку
+                    list1.Add(Convert.ToDouble(dr.Cells[0].Value), Convert.ToDouble(dr.Cells[1].Value));
+                }
+                zedGraphControl2.BringToFront();
+                Drawing drawing = new Drawing(zedGraphControl2);
+                drawing.drawBar(zedGraphControl2, list1);
             }
         }
 
