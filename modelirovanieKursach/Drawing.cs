@@ -56,7 +56,7 @@ namespace modelirovanieKursach
             zedGraph.Invalidate();
         }
 
-        public void drawBar(ZedGraphControl zedGraph, PointPairList pairList)
+        public void drawBar(ZedGraphControl zedGraph, PointPairList pairList, Color color)
         {
             // Получим панель для рисования
             GraphPane pane = zedGraph.GraphPane;
@@ -71,7 +71,7 @@ namespace modelirovanieKursach
 
             
 
-            LineItem myItem = pane.AddCurve("", list, Color.Red, SymbolType.None);
+            LineItem myItem = pane.AddCurve("", list, color, SymbolType.None);
             myItem.Line.Width = 3.0f;
             zedGraph.AxisChange();
             zedGraph.Invalidate();

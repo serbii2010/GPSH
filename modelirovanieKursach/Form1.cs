@@ -49,26 +49,6 @@ namespace modelirovanieKursach
             #endregion
         }
 
-        //private void graphDraw()
-        //{
-        //    PointPairList list = new PointPairList();
-
-
-        //    double xmin = -1;
-        //    double xmax = 1;
-
-        //    // Заполняем список точек
-        //    for (double x = xmin; x <= xmax; x += 0.01)
-        //    {
-        //        // добавим в список точку
-        //        list.Add(x, 4 * Math.Pow(x, 2));
-        //    }
-
-        //    Drawing drawing = new Drawing();
-        //    drawing.DrawFunction(zedGraphControl2, rowAllocation);
-        //}
-
-
         /*
          метод обратной функции
          */
@@ -86,7 +66,7 @@ namespace modelirovanieKursach
 
                 for (int i = 0; i < Convert.ToInt32(numericUpDown2.Value); i++)
                 {
-                    double experience = Math.Pow(random.NextDouble(), 2)/4;
+                    double experience = func.functionReverse(random.NextDouble());
                     sample.Add(experience);
                 }
                 foreach (var d in sample)
@@ -133,22 +113,42 @@ namespace modelirovanieKursach
                         );
                     return;
                 }
+
+
+                Dictionary<double,double> practicalAllocation = new Dictionary<double, double>();
+                foreach (var d in rowрAllocation)
+                {
+                    practicalAllocation.Add(d.Key,0);
+                }
+
+
                 var random = new Random();
                 for (int i = 0; i < numericUpDown2.Value; i++)
                 {
-                    textBox1.Text += func.functionDiscrete(rowрAllocation, random.NextDouble()) + "\r\n";
+                    double experiment = func.functionDiscrete(rowрAllocation, random.NextDouble());
+                    textBox1.Text += experiment + "\r\n";
+                    practicalAllocation[experiment] += Convert.ToDouble(1/numericUpDown2.Value);
                 }
 
                 PointPairList list1 = new PointPairList();
+                PointPairList list2 = new PointPairList();
                 // Заполняем список точек
-                foreach (DataGridViewRow dr in dataGridView1.SelectedRows)
+                foreach (var dr in rowрAllocation)
                 {
                 //     добавим в список точку
-                    list1.Add(Convert.ToDouble(dr.Cells[0].Value), Convert.ToDouble(dr.Cells[1].Value));
+                    list1.Add(dr.Key, dr.Value);
+
+                }
+                foreach (var dr in practicalAllocation)
+                {
+                    //     добавим в список точку
+                    list2.Add(dr.Key-0.1, dr.Value);
+
                 }
                 zedGraphControl2.BringToFront();
                 Drawing drawing = new Drawing(zedGraphControl2);
-                drawing.drawBar(zedGraphControl2, list1);
+                drawing.drawBar(zedGraphControl2, list1, Color.Red);
+                drawing.drawBar(zedGraphControl2, list2, Color.RoyalBlue);
             }
         }
 
@@ -328,19 +328,13 @@ namespace modelirovanieKursach
             dataGridView1.Rows.Clear();
 
             int i = 0;
-            double sum = 0;
             foreach (var d in prim)
             {
-                sum += d.Value;
                 dataGridView1.Rows.Add(d.Key, d.Value);
                 dataGridView1.Rows[i].Height = 20;
                 i++;
             }
 
-            if (Math.Round(sum, 5) != 1)
-            {
-                MessageBox.Show("Сумма вероятносте не равна 1!!!");
-            }
 
             dataGridView1.Height = dataGridView1.Rows.Count * 20 + 23;
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace modelirovanieKursach
 {
@@ -22,6 +23,12 @@ namespace modelirovanieKursach
                 }
             }
             return 0;
+        }
+
+        public static double functionReverse(double d)
+        {
+            //return Math.Pow(d, 2) / 4;
+            return Math.Pow(2/(Math.E * d), 2);
         }
 
         public static double functionUniversal(double x)
