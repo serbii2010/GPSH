@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
@@ -45,7 +46,7 @@ namespace modelirovanieKursach
             }
 
             Drawing drawing = new Drawing(zedGraphControl1);
-            drawing.DrawFunction(zedGraphControl1, list);
+            drawing.DrawFunction(zedGraphControl1, list, Color.Blue);
             #endregion
         }
 
@@ -63,24 +64,30 @@ namespace modelirovanieKursach
                 textBox1.Text = "";
                 var random = new Random();
                 var sample = new List<double>();
+                Mutex mutex = new Mutex();
 
-                for (int i = 0; i < Convert.ToInt32(numericUpDown2.Value); i++)
+                Parallel.For(0, Convert.ToInt32(numericUpDown2.Value), i =>
                 {
                     double experience = func.functionReverse(random.NextDouble());
+                    mutex.WaitOne();
                     sample.Add(experience);
+                    mutex.ReleaseMutex();
                 }
-                foreach (var d in sample)
+                );
+                for (int i = 0; i < 50; i++)
                 {
-                    textBox1.Text += d + "\r\n";
+                    textBox1.Text += sample[i] + "\r\n";
                 }
             }
 
 
             /**
-             метод обратной функции для дискретный величин
+             метод обратной функции для дискретных величин
              */
             if (radioButton5.Checked)
             {
+
+                List<double> sample = new List<double>();
                 double sumP = 0;
                 textBox1.Text = "";
                 Dictionary<double,double> rowрAllocation = new Dictionary<double, double>();
@@ -109,7 +116,7 @@ namespace modelirovanieKursach
                 {
                     MessageBox.Show(
                         "Сумма вероятностей должна быть равна 1, а у вас " + 
-                        Convert.ToString(sumP)
+                        sumP
                         );
                     return;
                 }
@@ -123,13 +130,30 @@ namespace modelirovanieKursach
 
 
                 var random = new Random();
-                for (int i = 0; i < numericUpDown2.Value; i++)
-                {
-                    double experiment = func.functionDiscrete(rowрAllocation, random.NextDouble());
-                    textBox1.Text += experiment + "\r\n";
-                    practicalAllocation[experiment] += Convert.ToDouble(1/numericUpDown2.Value);
-                }
+                Mutex mutex = new Mutex();
+                Parallel.For(0, Convert.ToInt32(numericUpDown2.Value), i =>
+                    {
+                        double experiment = func.functionDiscrete(rowрAllocation, random.NextDouble());
+                        mutex.WaitOne();
+                        sample.Add(experiment);
+                        //textBox1.Text += experiment + "\r\n";
+                        practicalAllocation[experiment] += Convert.ToDouble(1/numericUpDown2.Value);
 
+                        mutex.ReleaseMutex();
+                    }
+                    );
+
+                textBox1.Text = "";
+                for (int i = 0; i < 50; i++)
+                {
+                    textBox1.Text += sample[i] + "\r\n";
+                }
+                
+
+
+                /*
+                 * рисование
+                 */
                 PointPairList list1 = new PointPairList();
                 PointPairList list2 = new PointPairList();
                 // Заполняем список точек
@@ -139,10 +163,12 @@ namespace modelirovanieKursach
                     list1.Add(dr.Key, dr.Value);
 
                 }
+                double s = 0;
                 foreach (var dr in practicalAllocation)
                 {
                     //     добавим в список точку
                     list2.Add(dr.Key-0.1, dr.Value);
+                    s += dr.Value;
 
                 }
                 zedGraphControl2.BringToFront();
@@ -281,16 +307,23 @@ namespace modelirovanieKursach
 
             borderInterval.Add(9);
 
-            for (int i = 0; i < Convert.ToInt32(numericUpDown2.Value); i++)
+            Mutex mutex = new Mutex();
+            Parallel.For(0, Convert.ToInt32(numericUpDown2.Value), i =>
+                {
+                    int r = random.Next(Convert.ToInt32(numericUpDown1.Value) - 1);
+                    mutex.WaitOne();
+                    sample.Add(
+                        func.functionUniversal((borderInterval[r + 1] - borderInterval[r])
+                                               *random.NextDouble() + borderInterval[r])
+                        );
+                    mutex.ReleaseMutex();
+                }
+                );
+
+
+            for (int i = 0; i < 50; i++)
             {
-                int r = random.Next(Convert.ToInt32(numericUpDown1.Value) - 1);
-                sample.Add(func.functionUniversal((borderInterval[r + 1] - borderInterval[r])
-                * random.NextDouble() + borderInterval[r]));
-            }
-            
-            foreach (var d in sample)
-            {
-                textBox1.Text += d + "\r\n";
+                textBox1.Text += sample[i] + "\r\n";
             }
         }
 
