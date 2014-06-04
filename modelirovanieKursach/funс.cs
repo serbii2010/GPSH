@@ -27,13 +27,13 @@ namespace modelirovanieKursach
 
         public static double functionReverse(double d)
         {
-            //return Math.Pow(d, 2) / 4;
-            return Math.Pow(2/(Math.E * d), 2);
+            return Math.Pow(d, 2) / 4;
+            //return Math.Pow(2/(Math.E * d), 2);
         }
 
         public static double functionUniversal(double x)
         {
-            if (x<0 || x>9)
+            if (x<0)
             {
                 return 0;
             }
@@ -73,6 +73,7 @@ namespace modelirovanieKursach
             {
                 return -5 * (x-8) + 5;
             }
+
             return 0;
         }
 
@@ -89,6 +90,24 @@ namespace modelirovanieKursach
             {
                 S += functionUniversal(x)*dx;
                 x += dx;
+            }
+            return S;
+        }
+
+        public static double integralDensity(double x0, double x1, double dx)
+        {
+            dx *= 0.01;
+            if (dx <= 0)
+            {
+                return 0;
+            }
+            double x = x0;
+            double S = 0;
+            while (x < x1)
+            {
+                x += dx;
+                S += (1.0 / Math.Pow(x, 1.0 / 2))*dx;
+                
             }
             return S;
         }

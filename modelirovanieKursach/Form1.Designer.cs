@@ -37,6 +37,9 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -47,34 +50,32 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.zedGraphControl3 = new ZedGraph.ZedGraphControl();
+            this.zedGraphControl2 = new ZedGraph.ZedGraphControl();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button3 = new System.Windows.Forms.Button();
-            this.zedGraphControl2 = new ZedGraph.ZedGraphControl();
-            this.zedGraphControl3 = new ZedGraph.ZedGraphControl();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 515);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Location = new System.Drawing.Point(16, 630);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(166, 28);
             this.button1.TabIndex = 1;
@@ -84,7 +85,8 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(184, 515);
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button2.Location = new System.Drawing.Point(188, 630);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(156, 28);
             this.button2.TabIndex = 2;
@@ -94,6 +96,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
@@ -140,12 +143,15 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(688, 497);
+            this.tabControl1.Size = new System.Drawing.Size(688, 612);
             this.tabControl1.TabIndex = 10;
             // 
             // tabPage1
@@ -161,6 +167,31 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "значеия";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            this.dataGridView1.Location = new System.Drawing.Point(341, 10);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 30;
+            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridView1.Size = new System.Drawing.Size(180, 153);
+            this.dataGridView1.TabIndex = 15;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "значение";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Вероятность";
+            this.Column2.Name = "Column2";
             // 
             // label4
             // 
@@ -267,14 +298,43 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(680, 471);
+            this.tabPage2.Size = new System.Drawing.Size(680, 586);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "графики";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // zedGraphControl3
+            // 
+            this.zedGraphControl3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.zedGraphControl3.Location = new System.Drawing.Point(6, 372);
+            this.zedGraphControl3.Name = "zedGraphControl3";
+            this.zedGraphControl3.ScrollGrace = 0D;
+            this.zedGraphControl3.ScrollMaxX = 0D;
+            this.zedGraphControl3.ScrollMaxY = 0D;
+            this.zedGraphControl3.ScrollMaxY2 = 0D;
+            this.zedGraphControl3.ScrollMinX = 0D;
+            this.zedGraphControl3.ScrollMinY = 0D;
+            this.zedGraphControl3.ScrollMinY2 = 0D;
+            this.zedGraphControl3.Size = new System.Drawing.Size(671, 208);
+            this.zedGraphControl3.TabIndex = 2;
+            // 
+            // zedGraphControl2
+            // 
+            this.zedGraphControl2.Location = new System.Drawing.Point(6, 238);
+            this.zedGraphControl2.Name = "zedGraphControl2";
+            this.zedGraphControl2.ScrollGrace = 0D;
+            this.zedGraphControl2.ScrollMaxX = 0D;
+            this.zedGraphControl2.ScrollMaxY = 0D;
+            this.zedGraphControl2.ScrollMaxY2 = 0D;
+            this.zedGraphControl2.ScrollMinX = 0D;
+            this.zedGraphControl2.ScrollMinY = 0D;
+            this.zedGraphControl2.ScrollMinY2 = 0D;
+            this.zedGraphControl2.Size = new System.Drawing.Size(671, 150);
+            this.zedGraphControl2.TabIndex = 1;
+            // 
             // zedGraphControl1
             // 
-            this.zedGraphControl1.Location = new System.Drawing.Point(3, 3);
+            this.zedGraphControl1.Location = new System.Drawing.Point(6, 0);
             this.zedGraphControl1.Name = "zedGraphControl1";
             this.zedGraphControl1.ScrollGrace = 0D;
             this.zedGraphControl1.ScrollMaxX = 0D;
@@ -283,11 +343,12 @@
             this.zedGraphControl1.ScrollMinX = 0D;
             this.zedGraphControl1.ScrollMinY = 0D;
             this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(671, 153);
+            this.zedGraphControl1.Size = new System.Drawing.Size(665, 232);
             this.zedGraphControl1.TabIndex = 0;
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.radioButton5);
             this.groupBox3.Controls.Add(this.radioButton4);
             this.groupBox3.Location = new System.Drawing.Point(706, 120);
@@ -296,16 +357,6 @@
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "обр. ф-я";
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(7, 42);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(95, 17);
-            this.radioButton4.TabIndex = 0;
-            this.radioButton4.Text = "непрерывный";
-            this.radioButton4.UseVisualStyleBackColor = true;
             // 
             // radioButton5
             // 
@@ -319,23 +370,19 @@
             this.radioButton5.Text = "дискретный";
             this.radioButton5.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // radioButton4
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.dataGridView1.Location = new System.Drawing.Point(341, 10);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 30;
-            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(180, 153);
-            this.dataGridView1.TabIndex = 15;
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(7, 42);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(95, 17);
+            this.radioButton4.TabIndex = 0;
+            this.radioButton4.Text = "непрерывный";
+            this.radioButton4.UseVisualStyleBackColor = true;
             // 
             // groupBox4
             // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.numericUpDown3);
             this.groupBox4.Location = new System.Drawing.Point(706, 233);
             this.groupBox4.Name = "groupBox4";
@@ -357,19 +404,10 @@
             0});
             this.numericUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
             // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "значение";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Вероятность";
-            this.Column2.Name = "Column2";
-            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(751, 511);
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Location = new System.Drawing.Point(751, 321);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(103, 23);
             this.button3.TabIndex = 17;
@@ -377,39 +415,11 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // zedGraphControl2
-            // 
-            this.zedGraphControl2.Location = new System.Drawing.Point(3, 162);
-            this.zedGraphControl2.Name = "zedGraphControl2";
-            this.zedGraphControl2.ScrollGrace = 0D;
-            this.zedGraphControl2.ScrollMaxX = 0D;
-            this.zedGraphControl2.ScrollMaxY = 0D;
-            this.zedGraphControl2.ScrollMaxY2 = 0D;
-            this.zedGraphControl2.ScrollMinX = 0D;
-            this.zedGraphControl2.ScrollMinY = 0D;
-            this.zedGraphControl2.ScrollMinY2 = 0D;
-            this.zedGraphControl2.Size = new System.Drawing.Size(671, 150);
-            this.zedGraphControl2.TabIndex = 1;
-            // 
-            // zedGraphControl3
-            // 
-            this.zedGraphControl3.Location = new System.Drawing.Point(3, 315);
-            this.zedGraphControl3.Name = "zedGraphControl3";
-            this.zedGraphControl3.ScrollGrace = 0D;
-            this.zedGraphControl3.ScrollMaxX = 0D;
-            this.zedGraphControl3.ScrollMaxY = 0D;
-            this.zedGraphControl3.ScrollMaxY2 = 0D;
-            this.zedGraphControl3.ScrollMinX = 0D;
-            this.zedGraphControl3.ScrollMinY = 0D;
-            this.zedGraphControl3.ScrollMinY2 = 0D;
-            this.zedGraphControl3.Size = new System.Drawing.Size(671, 150);
-            this.zedGraphControl3.TabIndex = 2;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(866, 555);
+            this.ClientSize = new System.Drawing.Size(866, 670);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -424,6 +434,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
@@ -431,7 +442,6 @@
             this.tabPage2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.ResumeLayout(false);

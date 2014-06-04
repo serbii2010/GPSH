@@ -76,8 +76,36 @@ namespace modelirovanieKursach
                 );
                 for (int i = 0; i < 50; i++)
                 {
-                    textBox1.Text += sample[i] + "\r\n";
+                    if (i<numericUpDown2.Value)
+                    {
+                        textBox1.Text += sample[i] + "\r\n";
+                    }
                 }
+
+                /*
+                 * рисование
+                 */
+                PointPairList list4 = new PointPairList();
+                for (double i = 0; i <= 0.25; i+= 0.0001)
+                {
+                    list4.Add(i, (1.0/Math.Pow(i,0.5)));
+                }
+
+                PointPairList list3 = new PointPairList();
+                Dictionary<double,double> d = new Dictionary<double, double>();
+                d = recoveryFunction.recoveContinuos(sample);
+                //foreach (var d1 in d)
+                //{
+                //    dx = 
+                //}
+                foreach (var recoveContinuo in d)
+                {
+                    list3.Add(recoveContinuo.Key,recoveContinuo.Value);
+                }
+                Drawing drawing = new Drawing(zedGraphControl3);
+                drawing.DrawFunction(zedGraphControl3, list3, Color.Red);
+                drawing.DrawFunction(zedGraphControl3, list4, Color.Blue);
+
             }
 
 
@@ -146,10 +174,13 @@ namespace modelirovanieKursach
                 textBox1.Text = "";
                 for (int i = 0; i < 50; i++)
                 {
-                    textBox1.Text += sample[i] + "\r\n";
+                    if (i<numericUpDown2.Value)
+                    {
+                        textBox1.Text += sample[i] + "\r\n";
+                    }
                 }
                 
-
+                
 
                 /*
                  * рисование
@@ -171,10 +202,11 @@ namespace modelirovanieKursach
                     s += dr.Value;
 
                 }
-                zedGraphControl2.BringToFront();
-                Drawing drawing = new Drawing(zedGraphControl2);
-                drawing.drawBar(zedGraphControl2, list1, Color.Red);
-                drawing.drawBar(zedGraphControl2, list2, Color.RoyalBlue);
+                zedGraphControl3.BringToFront();
+                Drawing drawing = new Drawing(zedGraphControl3);
+                drawing.drawBar(zedGraphControl3, list1, Color.Red);
+                drawing.drawBar(zedGraphControl3, list2, Color.RoyalBlue);
+
             }
         }
 
@@ -325,6 +357,28 @@ namespace modelirovanieKursach
             {
                 textBox1.Text += sample[i] + "\r\n";
             }
+
+            /*
+             * рисование
+             */
+            PointPairList list4 = new PointPairList();
+            for (double i = 0; i <= 9; i += 0.001)
+            {
+                list4.Add(i, func.functionUniversal(i));
+            }
+
+            PointPairList list3 = new PointPairList();
+            Dictionary<double, double> d = new Dictionary<double, double>();
+            d = recoveryFunction.recoveContinuos(sample);
+
+            foreach (var recoveContinuo in d)
+            {
+                list3.Add(recoveContinuo.Key, recoveContinuo.Value);
+            }
+
+            Drawing drawing = new Drawing(zedGraphControl3);
+            //drawing.DrawFunction(zedGraphControl3, list3, Color.Red);
+            drawing.DrawFunction(zedGraphControl3, list4, Color.Blue);
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
